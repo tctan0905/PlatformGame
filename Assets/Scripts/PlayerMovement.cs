@@ -21,9 +21,13 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpCooldown;
     float horizontalInput;
 
-    public GameObject checkAttack;
-    public bool isAttack;
     public int damagePlayer;
+
+    public LayerMask enemyLayers;
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public float attackRate = 2f;
+    float nextTimeAttack = 0f;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -35,8 +39,16 @@ public class PlayerMovement : MonoBehaviour
     {
         Movement();
         Jump();
-        if (Input.GetMouseButtonDown(0))
-            Attack();
+        if(Time.time > nextTimeAttack)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Attack();
+                nextTimeAttack = Time.time + 1 / attackRate;
+            }
+            
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -61,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
        
         // set animator
         anim.SetBool("Run", horizontalInput != 0);
-        anim.SetBool("Grounded", isGround);
     }
 
     void Jump()
@@ -73,27 +84,36 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && doubleJumpAllowed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, _jumpPower);
+            rb.velocity = new Vector2(rb.velocity.x , _jumpPower);
             doubleJumpAllowed = false;
         }
+        anim.SetBool("Grounded", isGround);
+        Debug.Log(isGround);
     }
     void Attack()
-    {
-        if(!isAttack)
+    {     
+        anim.SetTrigger("Attack");
+        Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemy)
         {
-            anim.SetTrigger("Attack");
-            StartCoroutine(colAttack());
-        }
-        
+            Debug.Log("Hit " + enemy.name);
+            enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
+        }   
     } 
-    IEnumerator colAttack()
+    //IEnumerator AttackPoint()
+    //{
+    //    //checkAttack.SetActive(true);
+    //    //isAttack = true;
+    //    //yield return new WaitForSeconds(0.6f);
+    //    //checkAttack.SetActive(false);
+    //    //isAttack = false;
+        
+    //}
+    private void OnDrawGizmosSelected()
     {
-        checkAttack.SetActive(true);
-        isAttack = true;
-        GameManager._instance.TakeDamage(20);
-        yield return new WaitForSeconds(0.6f);
-        checkAttack.SetActive(false);
-        isAttack = false;
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position,attackRange);
     }
-   
+
 }

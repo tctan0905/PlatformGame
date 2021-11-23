@@ -6,16 +6,12 @@ public class EnemyController : MonoBehaviour
 {
     public int healtEnemy;
 
-    // Update is called once per frame
-    void Update()
+    public void takeDamage(int damage)
     {
-        if(healtEnemy <= 0)
+        healtEnemy -= damage;
+        if (healtEnemy <= 0)
         {
             Destroy(gameObject);
         }
-    }
-    public void takeDamage(int damage)
-    {
-         healtEnemy -= damage;
     }
 }

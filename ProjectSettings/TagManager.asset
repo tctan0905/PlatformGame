@@ -17,7 +17,7 @@ TagManager:
   - WallLayer
   - 
   - 
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -42,4 +42,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 2859143835
+    locked: 0
+  - name: behind
+    uniqueID: 3136089749
+    locked: 0
+  - name: ground
+    uniqueID: 974158269
+    locked: 0
+  - name: font
+    uniqueID: 1525236027
     locked: 0
