@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    int playerLayer, jumpLayer;
+
 
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpPower;
@@ -34,19 +36,21 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        playerLayer = LayerMask.NameToLayer("Player");
+        jumpLayer = LayerMask.NameToLayer("JumpArea");
     }
     private void Update()
     {
         Movement();
         Jump();
-        if(Time.time > nextTimeAttack)
+        
+        if (Time.time > nextTimeAttack)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 Attack();
                 nextTimeAttack = Time.time + 1 / attackRate;
             }
-            
         }
         
     }
@@ -87,6 +91,11 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x , _jumpPower);
             doubleJumpAllowed = false;
         }
+        if (rb.velocity.y > 0)
+            Physics2D.IgnoreLayerCollision(playerLayer, jumpLayer, true);
+        else
+            Physics2D.IgnoreLayerCollision(playerLayer, jumpLayer, false);
+
         anim.SetBool("Grounded", isGround);
         Debug.Log(isGround);
     }

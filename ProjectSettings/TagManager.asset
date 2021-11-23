@@ -15,8 +15,8 @@ TagManager:
   - UI
   - Grounded
   - WallLayer
-  - 
-  - 
+  - JumpArea
+  - Player
   - Enemy
   - 
   - 
