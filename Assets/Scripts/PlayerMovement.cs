@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     int playerLayer, jumpLayer;
 
-
+    public int _health;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpPower;
     bool isGround = false;
@@ -114,15 +114,6 @@ public class PlayerMovement : MonoBehaviour
             enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
         }   
     } 
-    //IEnumerator AttackPoint()
-    //{
-    //    //checkAttack.SetActive(true);
-    //    //isAttack = true;
-    //    //yield return new WaitForSeconds(0.6f);
-    //    //checkAttack.SetActive(false);
-    //    //isAttack = false;
-        
-    //}
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -130,4 +121,12 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position,attackRange);
     }
 
+    public void hitDamage(int hitDamage)
+    {
+        _health -= hitDamage;
+        if(_health <=0)
+        {
+            Debug.Log("DIE");
+        }
+    }
 }
