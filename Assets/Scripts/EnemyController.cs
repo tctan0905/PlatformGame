@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     PlayerMovement healthPlayer;
     public float nextHit;
     public float currentHit;
+    public bool isFollow;
     private void Start()
     {
         playerTarget = GameObject.Find("Player").GetComponent<Transform>();
@@ -25,7 +26,7 @@ public class EnemyController : MonoBehaviour
         currentHit -= Time.deltaTime;
         if(currentHit <=0)
         {
-            if (transform.position.x - playerTarget.position.x <= 0.5)
+            if (transform.position.x - playerTarget.position.x <= 0.5f)
             {
                 HitDamage();
                 rb.velocity = Vector2.zero;
@@ -39,27 +40,13 @@ public class EnemyController : MonoBehaviour
         }
         if (dir < 5)
         {
-            
             //transform.position = Vector2.MoveTowards(transform.position, playerTarget.position, moveSpeed * Time.deltaTime);
             //transform.up = Vector2.MoveTowards(transform.up)
-            if (transform.position.x < playerTarget.position.x)
-            {
-                
-                rb.velocity = new Vector2(moveSpeed, 0);
-                transform.localScale = new Vector2(1, 1);
-            }
-            else
-            {
-                rb.velocity = new Vector2(-moveSpeed , 0);
-                transform.localScale = new Vector2(-1, 1);
-            }
-        }
-        else
-        {
-            if(dir <= 10 )
+            if(!isFollow)
             {
                 if (transform.position.x < playerTarget.position.x)
                 {
+
                     rb.velocity = new Vector2(moveSpeed, 0);
                     transform.localScale = new Vector2(1, 1);
                 }
@@ -68,10 +55,34 @@ public class EnemyController : MonoBehaviour
                     rb.velocity = new Vector2(-moveSpeed, 0);
                     transform.localScale = new Vector2(-1, 1);
                 }
+                isFollow = true;
+
+            }
+
+        }
+        else
+        {
+            if(dir <= 10 )
+            {
+                if(isFollow)
+                {
+                    if (transform.position.x < playerTarget.position.x)
+                    {
+                        rb.velocity = new Vector2(moveSpeed, 0);
+                        transform.localScale = new Vector2(1, 1);
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(-moveSpeed, 0);
+                        transform.localScale = new Vector2(-1, 1);
+                    }
+                }
+                
             }
             if(dir > 10)
             {
                 rb.velocity = Vector2.zero;
+                isFollow = false;
                 
             }
         }
