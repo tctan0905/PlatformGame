@@ -18,6 +18,7 @@ public class CameraFollow : MonoBehaviour
     {
         temp = transform.position;
         temp.z = target.position.z;
+
         if (Vector3.Distance(temp, target.position) >= 10)
         {
             transform.DOKill();
