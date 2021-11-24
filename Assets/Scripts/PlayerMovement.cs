@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpPower;
-    bool isGround = true;
+    bool isGround = false;
     bool doubleJumpAllowed = false;
     bool attackAllowed = true;
 
@@ -59,10 +59,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Debug.Log("Ground");
             isGround = true;
             doubleJumpAllowed = true;
         }
+        else
+            isGround = false;
     }
     void Movement()
     {
@@ -81,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+        anim.SetFloat("yVelocity", rb.velocity.y);
+
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, _jumpPower);
@@ -91,13 +94,15 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x , _jumpPower);
             doubleJumpAllowed = false;
         }
+
+        anim.SetBool("Grounded", isGround);
+
+
         if (rb.velocity.y > 0)
             Physics2D.IgnoreLayerCollision(playerLayer, jumpLayer, true);
         else
             Physics2D.IgnoreLayerCollision(playerLayer, jumpLayer, false);
 
-        anim.SetBool("Grounded", isGround);
-        Debug.Log(isGround);
     }
     void Attack()
     {     
