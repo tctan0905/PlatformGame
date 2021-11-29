@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour
         temp = transform.position;
         temp.z = target.position.z;
         
-        if (Vector3.Distance(temp, target.position) >= 5)
+        if (Vector3.Distance(temp, target.position) >= 1)
         {
 
             if (target.position.x < -7.2 || target.position.x > 255)
