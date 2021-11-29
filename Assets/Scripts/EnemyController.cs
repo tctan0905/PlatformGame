@@ -13,6 +13,10 @@ public class EnemyController : MonoBehaviour
     public float nextHit;
     public float currentHit;
     public bool isFollow;
+    public Transform attackPoint;
+    public LayerMask playerLayers; 
+    public float attackRange = 0.5f;
+
     private void Start()
     {
         playerTarget = GameObject.Find("Player").GetComponent<Transform>();
@@ -26,7 +30,7 @@ public class EnemyController : MonoBehaviour
         currentHit -= Time.deltaTime;
         if(currentHit <=0)
         {
-            if (transform.position.x - playerTarget.position.x <= 0.5f)
+            if (transform.position.x - playerTarget.position.x <= 1.5f)
             {
                 HitDamage();
                 rb.velocity = Vector2.zero;
@@ -48,12 +52,12 @@ public class EnemyController : MonoBehaviour
                 {
 
                     rb.velocity = new Vector2(moveSpeed, 0);
-                    transform.localScale = new Vector2(1, 1);
+                    transform.localScale = new Vector2(1, 3);
                 }
                 else
                 {
                     rb.velocity = new Vector2(-moveSpeed, 0);
-                    transform.localScale = new Vector2(-1, 1);
+                    transform.localScale = new Vector2(-1, 3);
                 }
                 isFollow = true;
 
@@ -69,12 +73,12 @@ public class EnemyController : MonoBehaviour
                     if (transform.position.x < playerTarget.position.x)
                     {
                         rb.velocity = new Vector2(moveSpeed, 0);
-                        transform.localScale = new Vector2(1, 1);
+                        transform.localScale = new Vector2(1, 3);
                     }
                     else
                     {
                         rb.velocity = new Vector2(-moveSpeed, 0);
-                        transform.localScale = new Vector2(-1, 1);
+                        transform.localScale = new Vector2(-1, 3);
                     }
                 }
                 
@@ -102,7 +106,13 @@ public class EnemyController : MonoBehaviour
     public void HitDamage()
     {
         Debug.Log("Hit Player");
-        //healthPlayer.hitDamage(10);
-        //Debug.Log(healthPlayer._health);
+        //Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayers);
+        //hitPlayer.GetComponent<PlayerMovement>().hitDamage(20);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

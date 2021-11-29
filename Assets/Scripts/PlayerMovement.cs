@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public float attackRange = 0.5f;
     public float attackRate = 2f;
     float nextTimeAttack = 0f;
+    public bool isAttackFirst = false;
+    public bool isAttackSecond = false;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -46,10 +48,21 @@ public class PlayerMovement : MonoBehaviour
         
         if (Time.time > nextTimeAttack)
         {
+            isAttackFirst = false;
+            isAttackSecond = false;
             if (Input.GetMouseButtonDown(0))
             {
-                Attack();
-                nextTimeAttack = Time.time + 1 / attackRate;
+                if(!isAttackFirst && !isAttackSecond)
+                {
+                    Attack();
+                }
+                
+                if(isAttackFirst && !isAttackSecond)
+                {
+                    Attack2();
+                    nextTimeAttack = Time.time + 1 / attackRate;
+                }
+                //isDoubleAttack = false;
             }
         }
         
@@ -107,13 +120,26 @@ public class PlayerMovement : MonoBehaviour
     void Attack()
     {     
         anim.SetTrigger("Attack");
+        isAttackFirst = true;
         Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemy)
         {
             Debug.Log("Hit " + enemy.name);
             enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
         }   
-    } 
+    }
+    void Attack2()
+    {
+        anim.SetTrigger("Attack2");
+        isAttackSecond = true;
+        Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemy)
+        {
+            Debug.Log("Hit " + enemy.name);
+            enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
+        }
+        
+    }
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
