@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject PanelTransition;
+
     int playerLayer, jumpLayer;
 
     public int _health;
@@ -39,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         playerLayer = LayerMask.NameToLayer("Player");
-        jumpLayer = LayerMask.NameToLayer("JumpArea");
+        jumpLayer = LayerMask.NameToLayer("JumpArea");        
     }
     private void Update()
     {
@@ -66,6 +68,29 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "CheckPoint")
+        {
+            PanelTransition.SetActive(true);
+            StartCoroutine(LoadScene2());
+        }
+        if (collision.tag == "Die")
+        {
+            Invoke("ReloadScene", 1f);
+        }
+    }
+
+    void ReloadScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene1");
+
+    }
+    IEnumerator LoadScene2()
+    {
+        yield return new WaitForSeconds(6f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene2");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

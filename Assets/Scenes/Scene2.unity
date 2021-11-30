@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 71589061}
   - component: {fileID: 71589060}
   - component: {fileID: 71589059}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: export_0006_Layer-2-copy (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 201507682}
   - component: {fileID: 201507681}
   - component: {fileID: 201507680}
+  - component: {fileID: 201507683}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -322,6 +323,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &201507683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201507679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e5eebf2e241894e8f061739d6d05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 363700543}
 --- !u!1 &335892104
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,7 +941,7 @@ GameObject:
   - component: {fileID: 365114741}
   - component: {fileID: 365114740}
   - component: {fileID: 365114739}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: export_0006_Layer-2-copy
   m_TagString: Ground
   m_Icon: {fileID: 0}
