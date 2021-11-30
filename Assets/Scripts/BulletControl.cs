@@ -4,30 +4,26 @@ using UnityEngine;
 
 public class BulletControl : MonoBehaviour
 {
-    public float timeDestroy;
+    public GameObject target;
     Rigidbody2D rb;
-    [SerializeField] private float moveSpeed;
-    public Vector2 moveDirection;
+
+    Vector2 moveDirection;
+    float moveSpeed = 7f;
     private void Start()
     {
+        target = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
-        timeDestroy = 7f;
+        moveDirection = (target.transform.position - transform.position).normalized * moveSpeed;
+        rb.transform.up = moveDirection;
+        rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
+        Destroy(gameObject, 5f);
     }
-    // Update is called once per frame
-    void Update()
+
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        rb.velocity = new Vector2(moveSpeed * Time.deltaTime, 0);
-        timeDestroy -= Time.deltaTime;
-        if(timeDestroy <=0)
+        if (other.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
-        }
-    }
-    public void OnCollisionEnter2D(Collision2D col)
-    {
-        if(col.gameObject.tag == "Player")
-        {
-            Debug.Log("Hit");
+            Debug.Log("Hit Trigger");
             Destroy(gameObject);
         }
     }
