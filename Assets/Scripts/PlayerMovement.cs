@@ -50,21 +50,23 @@ public class PlayerMovement : MonoBehaviour
         
         if (Time.time > nextTimeAttack)
         {
-            isAttackFirst = false;
-            isAttackSecond = false;
+            //isAttackFirst = false;
+            //isAttackSecond = false;
             if (Input.GetMouseButtonDown(0))
             {
-                if(!isAttackFirst && !isAttackSecond)
-                {
-                    Attack();
-                }
-                
-                if(isAttackFirst && !isAttackSecond)
-                {
-                    Attack2();
-                    nextTimeAttack = Time.time + 1 / attackRate;
-                }
+                //if(!isAttackFirst && !isAttackSecond)
+                //{
+                Attack();
+                //Attack2();
+                //}
+
+                //if(isAttackFirst && !isAttackSecond)
+                //{
+                //    Attack2();
+                //}
                 //isDoubleAttack = false;
+                nextTimeAttack = Time.time + 1 / attackRate;
+
             }
         }
         
@@ -155,15 +157,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack2()
     {
-        anim.SetTrigger("Attack2");
-        isAttackSecond = true;
-        Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach (Collider2D enemy in hitEnemy)
-        {
-            Debug.Log("Hit " + enemy.name);
-            enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
-        }
-        
+        Collider2D hitBoss = Physics2D.OverlapCircle(attackPoint.position, attackRange, 11);
+        hitBoss.GetComponent<AIBoss>().takeDamage(damagePlayer);
     }
     private void OnDrawGizmosSelected()
     {
