@@ -5,39 +5,52 @@ using UnityEngine;
 public class AIEnemyShooter : MonoBehaviour
 {
     public Transform playerTarget;
-    public Transform firePoint;
-    public GameObject bulletPrefabs;
     public float nextTimeFire;
-    public float currentTimeFire;
+    public float fireRate;
+    public float followRange;
+    public float attackRange;
+    Rigidbody2D rb;
+    [SerializeField] float moveSpeed;
+    float dir;
     // Start is called before the first frame update
     void Start()
     {
         playerTarget = GameObject.Find("Player").transform;
-        currentTimeFire = nextTimeFire;
+        rb = GetComponent<Rigidbody2D>();
+        nextTimeFire = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentTimeFire -= Time.deltaTime;
+        dir = Vector2.Distance(transform.position, playerTarget.position);
         if (transform.position.x < playerTarget.position.x)
         {
-            transform.localScale = new Vector2(1, 3);
+            transform.localScale = new Vector2(1, 1);
         }
         else
         {
-            transform.localScale = new Vector2(-1, 3);
+            transform.localScale = new Vector2(-1, 1);
 
         }
-        if (currentTimeFire <= 0)
+
+        if (dir <= followRange && dir > attackRange)
         {
-            if (Vector2.Distance(transform.position, playerTarget.position) < 10)
-            {
-                Instantiate(bulletPrefabs, firePoint.position, Quaternion.identity);
-                currentTimeFire = nextTimeFire;
-
-            }
+            Debug.Log("Follow Character");
+            transform.position = Vector2.MoveTowards(transform.position, playerTarget.position, moveSpeed * Time.deltaTime);
         }
-        
+        else if (dir < attackRange && nextTimeFire < Time.time)
+        {
+            Debug.Log("Attack");
+            nextTimeFire = Time.time + fireRate;
+        }
+    }
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, followRange);
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.red;
     }
 }

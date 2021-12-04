@@ -25,8 +25,8 @@ public class AIBoss : MonoBehaviour
 
         if(Time.time > nexTime && distanceFromPlayer < lineOfSite)
         {
-                Instantiate(bulletBoss[Random.Range(0, bulletBoss.Length)], transform.position, Quaternion.identity);
-                nexTime = Time.time + fireRate;            
+            Instantiate(bulletBoss[Random.Range(0, bulletBoss.Length)], transform.position, Quaternion.identity);
+            nexTime = Time.time + fireRate;            
         }
     }
     public void OnDrawGizmos()

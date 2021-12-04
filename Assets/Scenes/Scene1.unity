@@ -3774,7 +3774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &704456984
 Transform:
   m_ObjectHideFlags: 0
@@ -3804,7 +3804,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.39578056, y: -0.50265217}
   serializedVersion: 2
-  m_Radius: 4.184826
+  m_Radius: 4
 --- !u!1 &743909004
 GameObject:
   m_ObjectHideFlags: 0
@@ -5353,7 +5353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111071556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.49, y: 0, z: 0}
+  m_LocalPosition: {x: 1.12, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 517283453}
@@ -7676,6 +7676,7 @@ GameObject:
   - component: {fileID: 1704361071}
   - component: {fileID: 1704361070}
   - component: {fileID: 1704361069}
+  - component: {fileID: 1704361072}
   m_Layer: 0
   m_Name: FEnemy
   m_TagString: Enemy
@@ -7691,7 +7692,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704361067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.31, y: -4.27, z: 0}
+  m_LocalPosition: {x: -8.29, y: -0.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 704456984}
@@ -7708,10 +7709,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1737938, y: -0.12845609}
+  m_Offset: {x: -0.24327564, y: 0.011057973}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7722,7 +7723,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7574291, y: 0.6659671}
+  m_Size: {x: 1.099102, y: 1.4742968}
   m_EdgeRadius: 0
 --- !u!212 &1704361070
 SpriteRenderer:
@@ -7794,6 +7795,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1704361072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704361067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbe731123997fb428c243ae2db4e986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTarget: {fileID: 517283453}
+  nextTimeFire: 2
+  fireRate: 2
+  followRange: 8
+  attackRange: 5
+  moveSpeed: 5
 --- !u!1001 &1713340805
 PrefabInstance:
   m_ObjectHideFlags: 0
