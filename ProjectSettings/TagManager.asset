@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - CheckPoint
   - Die
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX
