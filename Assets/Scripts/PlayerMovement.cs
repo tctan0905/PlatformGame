@@ -34,8 +34,6 @@ public class PlayerMovement : MonoBehaviour
     float nextTimeAttack = 0f;
     public bool isAttackFirst = false;
     public bool isAttackSecond = false;
-    [SerializeField] bool isZoomOut = false;
-    public Camera cameraZoom;
     
     // Start is called before the first frame update
     private void Awake()
@@ -73,14 +71,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if(isZoomOut)
-        {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 30f, Time.deltaTime * 2f);
-        }
-        else
-        {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 20f, Time.deltaTime * 2f);
-        }
+       
 
     }
 
@@ -187,16 +178,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke("ReloadScene", 1f);
         }
 
-        if(collision.tag == "CameraTrigger")
-        {
-            Debug.Log("Camera Zoom Out");
-            isZoomOut = true;
-        }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log("Camera Zoom In");
-        isZoomOut = false;
-    }
+  
 }

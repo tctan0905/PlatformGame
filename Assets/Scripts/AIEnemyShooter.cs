@@ -29,25 +29,29 @@ public class AIEnemyShooter : MonoBehaviour
     void Update()
     {
         dir = Vector2.Distance(transform.position, playerTarget.position);
-        if (transform.position.x < playerTarget.position.x)
+        if(!isAttack)
         {
-            transform.localScale = new Vector2(-1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector2(1, 1);
+            if (transform.position.x < playerTarget.position.x)
+            {
+                transform.localScale = new Vector2(-1, 1);
+            }
+            else
+            {
+                transform.localScale = new Vector2(1, 1);
 
-        }
+            }
 
-        if (dir <= followRange && dir > attackRange)
-        {
-            Debug.Log("Follow Character");
-            transform.position = Vector2.MoveTowards(transform.position, playerTarget.position, moveSpeed * Time.deltaTime);
+            if (dir <= followRange && dir > attackRange)
+            {
+                Debug.Log("Follow Character");
+                transform.position = Vector2.MoveTowards(transform.position, playerTarget.position, moveSpeed/2f * Time.deltaTime);
+            }
+            else if (dir < attackRange && nextTimeFire < Time.time)
+            {
+                StartCoroutine(FEAttack2());
+            }
         }
-        else if (dir < attackRange && nextTimeFire < Time.time)
-        {
-            StartCoroutine(FEAttack2());
-        }
+        
     }
     public void OnDrawGizmos()
     {
@@ -71,7 +75,14 @@ public class AIEnemyShooter : MonoBehaviour
     {
         if(other.gameObject.tag.Equals("Player"))
         {
-            Destroy(gameObject,0.1f);
+            Debug.Log("Hit Player");
+            Destroy(gameObject,0.2f);
+
+        }
+        if(other.gameObject.tag.Equals("Ground"))
+        {
+            Debug.Log("Hit Ground");
+            Destroy(gameObject,0.2f);
         }
     }
     IEnumerator FEAttack2()
@@ -81,11 +92,12 @@ public class AIEnemyShooter : MonoBehaviour
         {
             FEanim.SetTrigger("FEAttack");
             var tranformPlayerAgo = playerTarget;
-            moveDirection = (tranformPlayerAgo.position - transform.position).normalized * moveSpeed;
+            moveDirection = (tranformPlayerAgo.position - transform.position).normalized * moveSpeed *10f;
             rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
             Debug.Log("Attack");
             isAttack = true;
         }
        
     }
+
 }
