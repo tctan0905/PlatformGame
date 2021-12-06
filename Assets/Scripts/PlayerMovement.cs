@@ -34,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     float nextTimeAttack = 0f;
     public bool isAttackFirst = false;
     public bool isAttackSecond = false;
+    [SerializeField] bool isZoomOut = false;
+    public Camera cameraZoom;
+    
     // Start is called before the first frame update
     private void Awake()
     {
@@ -69,19 +72,16 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
-        
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "CheckPoint")
+
+        if(isZoomOut)
         {
-            PanelTransition.SetActive(true);
-            StartCoroutine(LoadScene2());
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 30f, Time.deltaTime * 2f);
         }
-        if (collision.tag == "Die")
+        else
         {
-            Invoke("ReloadScene", 1f);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 20f, Time.deltaTime * 2f);
         }
+
     }
 
     void ReloadScene()
@@ -174,5 +174,29 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("DIE");
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "CheckPoint")
+        {
+            PanelTransition.SetActive(true);
+            StartCoroutine(LoadScene2());
+        }
+        if (collision.tag == "Die")
+        {
+            Invoke("ReloadScene", 1f);
+        }
+
+        if(collision.tag == "CameraTrigger")
+        {
+            Debug.Log("Camera Zoom Out");
+            isZoomOut = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Debug.Log("Camera Zoom In");
+        isZoomOut = false;
     }
 }

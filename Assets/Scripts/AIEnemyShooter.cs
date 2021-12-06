@@ -15,6 +15,7 @@ public class AIEnemyShooter : MonoBehaviour
     private Animator FEanim;
     public int feDamage;
     private Vector2 moveDirection;
+    private bool isAttack = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,8 +46,7 @@ public class AIEnemyShooter : MonoBehaviour
         }
         else if (dir < attackRange && nextTimeFire < Time.time)
         {
-            Invoke(nameof(FEAttack),0.3f);
-            
+            StartCoroutine(FEAttack2());
         }
     }
     public void OnDrawGizmos()
@@ -57,20 +57,35 @@ public class AIEnemyShooter : MonoBehaviour
 
     }
  
-    public void FEAttack()
-    {
-        FEanim.SetTrigger("FEAttack");
-        var tranformPlayerAgo = playerTarget;
-        moveDirection = (tranformPlayerAgo.position - transform.position).normalized * moveSpeed*5;
-        rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
-        Debug.Log("Attack");
-        //nextTimeFire = Time.time + fireRate;
-    }
+    //public void FEAttack()
+    //{
+    //    FEanim.SetTrigger("FEAttack");
+    //    var tranformPlayerAgo = playerTarget;
+    //    moveDirection = (tranformPlayerAgo.position - transform.position).normalized * moveSpeed*5;
+    //    rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
+    //    Debug.Log("Attack");
+    //    //nextTimeFire = Time.time + fireRate;
+    //}
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag.Equals("Player"))
         {
             Destroy(gameObject,0.1f);
         }
+    }
+    IEnumerator FEAttack2()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if(!isAttack)
+        {
+            FEanim.SetTrigger("FEAttack");
+            var tranformPlayerAgo = playerTarget;
+            moveDirection = (tranformPlayerAgo.position - transform.position).normalized * moveSpeed;
+            rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
+            Debug.Log("Attack");
+            isAttack = true;
+        }
+       
     }
 }

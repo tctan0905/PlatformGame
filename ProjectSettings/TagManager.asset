@@ -9,6 +9,7 @@ TagManager:
   - CheckPoint
   - Die
   - EnemyAttack
+  - CameraTrigger
   layers:
   - Default
   - TransparentFX
