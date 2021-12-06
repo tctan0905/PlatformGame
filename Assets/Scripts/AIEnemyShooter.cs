@@ -51,7 +51,6 @@ public class AIEnemyShooter : MonoBehaviour
                 StartCoroutine(FEAttack2());
             }
         }
-        
     }
     public void OnDrawGizmos()
     {
