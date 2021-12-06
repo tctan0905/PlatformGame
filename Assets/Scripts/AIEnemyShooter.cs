@@ -12,12 +12,16 @@ public class AIEnemyShooter : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] float moveSpeed;
     float dir;
+    private Animator FEanim;
+    public int feDamage;
+    private Vector2 moveDirection;
     // Start is called before the first frame update
     void Start()
     {
         playerTarget = GameObject.Find("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         nextTimeFire = Time.time;
+        FEanim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,11 +30,11 @@ public class AIEnemyShooter : MonoBehaviour
         dir = Vector2.Distance(transform.position, playerTarget.position);
         if (transform.position.x < playerTarget.position.x)
         {
-            transform.localScale = new Vector2(1, 1);
+            transform.localScale = new Vector2(-1, 1);
         }
         else
         {
-            transform.localScale = new Vector2(-1, 1);
+            transform.localScale = new Vector2(1, 1);
 
         }
 
@@ -41,16 +45,32 @@ public class AIEnemyShooter : MonoBehaviour
         }
         else if (dir < attackRange && nextTimeFire < Time.time)
         {
-            Debug.Log("Attack");
-            nextTimeFire = Time.time + fireRate;
+            Invoke(nameof(FEAttack),0.3f);
+            
         }
     }
     public void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, followRange);
-        Gizmos.color = Color.green;
-
+        Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.red;
+
+    }
+ 
+    public void FEAttack()
+    {
+        FEanim.SetTrigger("FEAttack");
+        var tranformPlayerAgo = playerTarget;
+        moveDirection = (tranformPlayerAgo.position - transform.position).normalized * moveSpeed*5;
+        rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
+        Debug.Log("Attack");
+        //nextTimeFire = Time.time + fireRate;
+    }
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag.Equals("Player"))
+        {
+            Destroy(gameObject,0.1f);
+        }
     }
 }
