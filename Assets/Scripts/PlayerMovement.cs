@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
 
-
     private Rigidbody2D rb;
     private Animator anim;
     private BoxCollider2D boxCollider;
@@ -70,14 +69,11 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
-
-       
-
     }
 
     void ReloadScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Application.loadedLevel);
 
     }
     IEnumerator LoadScene2()
@@ -146,11 +142,7 @@ public class PlayerMovement : MonoBehaviour
             enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
         }   
     }
-    void Attack2()
-    {
-        Collider2D hitBoss = Physics2D.OverlapCircle(attackPoint.position, attackRange, 11);
-        hitBoss.GetComponent<AIBoss>().takeDamage(damagePlayer);
-    }
+
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -179,6 +171,4 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
-  
 }
