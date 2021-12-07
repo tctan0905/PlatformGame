@@ -74,11 +74,10 @@ public class PlayerMovement : MonoBehaviour
     void ReloadScene()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(Application.loadedLevel);
-
     }
     IEnumerator LoadScene2()
     {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(5.5f);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Scene2");
     }
 

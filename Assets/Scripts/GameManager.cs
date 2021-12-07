@@ -21,5 +21,6 @@ public class GameManager : MonoBehaviour
     public void TakeDamage(int dam)
     {
         enemyHealth.takeDamage(dam);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene1");
     }
 }
