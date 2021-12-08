@@ -5,16 +5,12 @@ using DG.Tweening;
 public class BulletControl : MonoBehaviour
 {
 
-    public void Update()
-    {
-        //float scaleLaser = Mathf.Lerp(transform.localScale.y, transform.localScale.y + 2, Time.deltaTime * moveSpeed);
-
-    }
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Hit Trigger");
+            Debug.Log("Hit Player");
+            other.gameObject.SendMessage("hitDamage", 5f);
         }
     }
     

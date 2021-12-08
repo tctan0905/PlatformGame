@@ -20,26 +20,24 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator anim;
-    private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     float horizontalInput;
 
     public int damagePlayer;
 
     public LayerMask enemyLayers;
-    public Transform attackPoint;
+    //public Transform attackPoint;
+    public GameObject attackPoint;
     public float attackRange = 0.5f;
     public float attackRate = 2f;
     float nextTimeAttack = 0f;
     public bool isAttackFirst = false;
     public bool isAttackSecond = false;
-    
     // Start is called before the first frame update
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
         playerLayer = LayerMask.NameToLayer("Player");
         jumpLayer = LayerMask.NameToLayer("JumpArea");        
     }
@@ -81,16 +79,7 @@ public class PlayerMovement : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("Scene2");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGround = true;
-            doubleJumpAllowed = true;
-        }
-        else
-            isGround = false;
-    }
+   
     void Movement()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -134,19 +123,21 @@ public class PlayerMovement : MonoBehaviour
     {     
         anim.SetTrigger("Attack");
         isAttackFirst = true;
-        Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach (Collider2D enemy in hitEnemy)
-        {
-            Debug.Log("Hit " + enemy.name);
-            enemy.GetComponent<EnemyController>().takeDamage(damagePlayer);
-        }   
+        attackPoint.SetActive(true);
+        Invoke(nameof(DeActive), 1f);
+        //Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        //foreach (Collider2D enemy in hitEnemy)
+        //{
+        //    Debug.Log("Hit " + enemy.name);
+        //    enemy.GetComponent<AIBoss>().takeDamage(damagePlayer);
+        //}   
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
-            return;
-        Gizmos.DrawWireSphere(attackPoint.position,attackRange);
+        //if (attackPoint == null)
+        //    return;
+        //Gizmos.DrawWireSphere(attackPoint.position,attackRange);
     }
 
     public void hitDamage(int hitDamage)
@@ -154,8 +145,22 @@ public class PlayerMovement : MonoBehaviour
         _health -= hitDamage;
         if(_health <=0)
         {
+            _health = 0;
             Debug.Log("DIE");
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGround = true;
+            doubleJumpAllowed = true;
+        }
+        else
+            isGround = false;
+
+        //if (collision.gameObject.tag == "Enemy")
+        //    Debug.Log("Hit Boss");
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -170,4 +175,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    public void DeActive()
+    {
+        attackPoint.SetActive(false);
+    }
+
 }

@@ -21,14 +21,12 @@ public class CameraZoomInOut : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("Camera Zoom Out");
             isZoomOut = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("Camera Zoom In");
         isZoomOut = false;
     }
 }
