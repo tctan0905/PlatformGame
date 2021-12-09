@@ -11,6 +11,12 @@ public class Eye
     public GameObject lazer;
     public Vector3 endPos;
 }
+[Serializable]
+public class Enemy
+{
+    public GameObject enemy;
+    public Vector3 endPos;
+}
 public class AIBoss : MonoBehaviour
 {
     public float nexTime;
@@ -19,6 +25,7 @@ public class AIBoss : MonoBehaviour
     public float lineOfSite;
     private Transform player,startPos;
     public List<Eye> listEye;
+    public List<Enemy> listEnemy;
     private bool isMoveUp = false;
     float speed = 2.5f;
     [SerializeField]bool isShoot = false;
@@ -31,6 +38,12 @@ public class AIBoss : MonoBehaviour
         {
             eye.endPos = eye.eye.transform.position;
             eye.eye.transform.position = transform.position;
+
+        }
+        foreach (var enemy in listEnemy)
+        {
+            enemy.endPos = enemy.enemy.transform.position;
+            enemy.enemy.transform.position = transform.position;
 
         }
     }
@@ -87,13 +100,32 @@ public class AIBoss : MonoBehaviour
                         eye.lazer.transform.localScale = new Vector3(1, 0.1f, 1);
                         eye.eye.transform.DOMove(transform.position, 1f).OnComplete(()=>
                         {
-                            isShoot = false;
-                            nexTime = Time.time + fireRate;
+                            foreach (var enemy in listEnemy)
+                            {
+                                enemy.enemy.transform.DOMove(enemy.endPos, 1f).OnComplete(()=> 
+                                {
+                                    var sequence = DOTween.Sequence();
+                                    foreach (var enemy in listEnemy)
+                                    {
+                                        targetPos = player.transform.position;
+                                        sequence.Append(enemy.enemy.transform.DOMove(targetPos, 0.5f).OnComplete(() =>
+                                        {
+                                            enemy.enemy.transform.position = transform.position;
+                                        }));
+                                    }
+                                    sequence.OnComplete(() =>
+                                    {
+                                        isShoot = false;
+                                        nexTime = Time.time + fireRate;
+                                    });
+                                });
+                            }
                         });
                         
                     });
                 });
             });
+            
         }
     }
 }
