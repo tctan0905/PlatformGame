@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using UnityEngine.UI;
 
 [Serializable]
 public class Eye
@@ -29,9 +30,15 @@ public class AIBoss : MonoBehaviour
     private bool isMoveUp = false;
     float speed = 2.5f;
     [SerializeField]bool isShoot = false;
+
+    public Slider bossHealthBar;
+    public GameObject winGamePanel;
+
     // Start is called before the first frame update
     void Start()
     {
+        winGamePanel.SetActive(false);
+        bossHealthBar.gameObject.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player").transform;
         nexTime = Time.time;
         foreach (var eye in listEye)
@@ -57,9 +64,12 @@ public class AIBoss : MonoBehaviour
     public void takeDamage(int damage)
     {
         healthBoss -= damage;
+        bossHealthBar.value = healthBoss;
+
         if (healthBoss <= 0)
         {
-            Debug.Log("BOSS DIE");
+            Time.timeScale = 0;
+            winGamePanel.SetActive(true);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -69,7 +79,10 @@ public class AIBoss : MonoBehaviour
         if (Time.time > nexTime && !isShoot && healthBoss >0)
         {
             MoveUpAndShoot();
+            bossHealthBar.gameObject.SetActive(true);
+            bossHealthBar.value = healthBoss;
         }
+
     }
     public void OnTriggerStay2D(Collider2D other)
     {
@@ -78,7 +91,11 @@ public class AIBoss : MonoBehaviour
         if (Time.time > nexTime && !isShoot && healthBoss > 0)
         {
             MoveUpAndShoot();
+            
         }
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
     }
     public void MoveUpAndShoot()
     {

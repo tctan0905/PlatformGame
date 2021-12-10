@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject PanelTransition;
@@ -45,24 +46,19 @@ public class PlayerMovement : MonoBehaviour
     {
         Movement();
         Jump();
-        
+        UIController.instance.playerHealthBar.value =_health;
+        if(UIController.instance.playerHealthBar.value == 0)
+        {
+            StartCoroutine("LoadScene2", 1f);
+        }
         if (Time.time > nextTimeAttack)
         {
-            //isAttackFirst = false;
-            //isAttackSecond = false;
             if (Input.GetMouseButtonDown(0))
             {
                 //if(!isAttackFirst && !isAttackSecond)
                 //{
                 Attack();
-                //Attack2();
-                //}
-
-                //if(isAttackFirst && !isAttackSecond)
-                //{
-                //    Attack2();
-                //}
-                //isDoubleAttack = false;
+                
                 nextTimeAttack = Time.time + 1 / attackRate;
 
             }
@@ -146,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
         if(_health <=0)
         {
             _health = 0;
-            Debug.Log("DIE");
+            LoadScene2();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)

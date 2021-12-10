@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class UIController : MonoBehaviour
 {
@@ -9,8 +11,17 @@ public class UIController : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject optionMenu;
 
+    public Animator flowerAnim;
+
+    public static UIController instance;
+    public Slider playerHealthBar;
+    
     private void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }    
         btn_Pause.SetActive(true);
         pausePanel.SetActive(false);
         pauseMenu.SetActive(false);
@@ -22,6 +33,7 @@ public class UIController : MonoBehaviour
         btn_Pause.SetActive(false);
         pausePanel.SetActive(true);
         pauseMenu.SetActive(true);
+        flowerAnim.SetTrigger("OnMenu");
     }
 
     public void Continue()
@@ -40,6 +52,12 @@ public class UIController : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         optionMenu.SetActive(false);
+    }
+    
+    public void PlayAgain()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
+        Time.timeScale = 1f;
     }
     public void Exit()
     {

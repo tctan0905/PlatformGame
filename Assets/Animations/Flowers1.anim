@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 2
+  m_Name: Flowers1
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 5bebcf8cab1635740b52ab21f20e3969, type: 3}
-    - time: 0.05
+    - time: 0.06666667
       value: {fileID: 21300000, guid: 28c7ea780a254fe4f96b3a4bda0b9bec, type: 3}
     - time: 0.11666667
       value: {fileID: 21300000, guid: 50425feb1c6fd8b499a35d6a1b6081cf, type: 3}
-    - time: 0.16666667
+    - time: 0.18333334
       value: {fileID: 21300000, guid: 2c56545ec6d860b4db1b4d1fd2f5057d, type: 3}
     - time: 0.23333333
       value: {fileID: 21300000, guid: 859771710e819504bbb4bb6a0eda70ef, type: 3}
@@ -47,11 +47,11 @@ AnimationClip:
       value: {fileID: 21300000, guid: 1760fa8f9523be24d9bdbde82467529a, type: 3}
     - time: 0.76666665
       value: {fileID: 21300000, guid: 731576bb6575ddf49b10e106b8ebfb48, type: 3}
-    - time: 0.8333333
+    - time: 0.81666666
       value: {fileID: 21300000, guid: bf47ececf92cda9428cf7aef9696e790, type: 3}
     - time: 0.8833333
       value: {fileID: 21300000, guid: 189848f4c4bfa2a4cafb69519af1d87c, type: 3}
-    - time: 0.95
+    - time: 0.93333334
       value: {fileID: 21300000, guid: 0eeadac494664a54fbc6e95e6982fdfd, type: 3}
     - time: 1
       value: {fileID: 21300000, guid: 36307c0f97aadb148bf7fd80060ab834, type: 3}
