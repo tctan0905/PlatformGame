@@ -8,7 +8,7 @@ public class AttackPoint : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            col.gameObject.GetComponent<AIBoss>().takeDamage(10);
+            col.gameObject.GetComponent<AIBoss>().takeDamage(20);
             Debug.Log("Hit Boss COL");
 
         }
