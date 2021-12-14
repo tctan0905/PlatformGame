@@ -10,6 +10,8 @@ TagManager:
   - Die
   - EnemyAttack
   - CameraTrigger
+  - item2
+  - item 1
   layers:
   - Default
   - TransparentFX

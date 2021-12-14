@@ -169,6 +169,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Invoke("ReloadScene", 1f);
         }
+        if (collision.tag == "item 1")
+        {
+            _health = 100;
+            Destroy(collision.gameObject);
+        }
+        if (collision.tag == "item2")
+        {
+            _health += 20;
+            Destroy(collision.gameObject);
+        }
 
     }
     public void DeActive()

@@ -10,7 +10,7 @@ public class BulletControl : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Hit Player");
-            other.gameObject.SendMessage("hitDamage", 5f);
+            other.gameObject.SendMessage("hitDamage", 10f);
         }
     }
     
