@@ -25,6 +25,14 @@ public class CameraZoomInOut : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            isZoomOut = true;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         isZoomOut = false;
