@@ -76,7 +76,7 @@ public class AIEnemyShooter : MonoBehaviour
         {
             Debug.Log("Hit Player");
             Destroy(gameObject,0.2f);
-            other.gameObject.SendMessage("hitDamage", 5);
+            other.gameObject.SendMessage("hitDamage", 10f);
         }
         if(other.gameObject.tag.Equals("Ground"))
         {

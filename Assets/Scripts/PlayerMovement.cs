@@ -138,11 +138,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void hitDamage(int hitDamage)
     {
+        anim.SetTrigger("Hurt");
+
         _health -= hitDamage;
         if(_health <=0)
         {
             _health = 0;
-            LoadScene2();
+            ReloadScene();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -167,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.tag == "Die")
         {
-            Invoke("ReloadScene", 1f);
+            Invoke("ReloadScene", 0.5f);
         }
         if (collision.tag == "item 1")
         {
