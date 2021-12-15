@@ -27,14 +27,12 @@ public class PlayerMovement : MonoBehaviour
     public int damagePlayer;
 
     public LayerMask enemyLayers;
-    //public Transform attackPoint;
     public GameObject attackPoint;
     public float attackRange = 0.5f;
     public float attackRate = 2f;
     float nextTimeAttack = 0f;
     public bool isAttackFirst = false;
     public bool isAttackSecond = false;
-    // Start is called before the first frame update
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,14 +51,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Time.time > nextTimeAttack)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.K))
             {
-                //if(!isAttackFirst && !isAttackSecond)
-                //{
-                Attack();
-                
+                Attack();                
                 nextTimeAttack = Time.time + 1 / attackRate;
-
             }
         }
     }
@@ -74,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(5.5f);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Scene2");
     }
-
    
     void Movement()
     {
@@ -121,19 +114,7 @@ public class PlayerMovement : MonoBehaviour
         isAttackFirst = true;
         attackPoint.SetActive(true);
         Invoke(nameof(DeActive), 1f);
-        //Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        //foreach (Collider2D enemy in hitEnemy)
-        //{
-        //    Debug.Log("Hit " + enemy.name);
-        //    enemy.GetComponent<AIBoss>().takeDamage(damagePlayer);
-        //}   
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        //if (attackPoint == null)
-        //    return;
-        //Gizmos.DrawWireSphere(attackPoint.position,attackRange);
+        
     }
 
     public void hitDamage(int hitDamage)
@@ -156,9 +137,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             isGround = false;
-
-        //if (collision.gameObject.tag == "Enemy")
-        //    Debug.Log("Hit Boss");
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

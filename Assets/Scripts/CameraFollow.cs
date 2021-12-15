@@ -21,7 +21,7 @@ public class CameraFollow : MonoBehaviour
         if (Vector3.Distance(temp, target.position) >= 1)
         {
 
-            if (target.position.x < -7.2 || target.position.x > 255)
+            if (target.position.x < -7.2 || target.position.x > 240)
             {
                 transform.DOKill();
             }
