@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.tag == "item2")
         {
-            _health += 20;
+            _health += 30;
             Destroy(collision.gameObject);
         }
 
